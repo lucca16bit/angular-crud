@@ -1,12 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
 
 import { Course } from '../models/course';
+
 
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
 })
