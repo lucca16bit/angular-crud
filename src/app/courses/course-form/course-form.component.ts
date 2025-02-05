@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CoursesService } from '../services/courses.service';
 import { AppMaterialModule } from './../../shared/app-material/app-material.module';
@@ -12,6 +13,7 @@ import { AppMaterialModule } from './../../shared/app-material/app-material.modu
   styleUrl: './course-form.component.scss'
 })
 export class CourseFormComponent implements OnInit {
+  private _snackBar = inject(MatSnackBar);
 
   form: FormGroup;
 
@@ -27,10 +29,14 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.save(this.form.value).subscribe(data => console.log(data));
+    this.service.save(this.form.value).subscribe(data => console.log(data), error => this.onError());
   }
 
   onCancel() {
 
+  }
+
+  private onError() {
+    this._snackBar.open('Erro ao salvar curso.', '', { duration: 5000});
   }
 }
