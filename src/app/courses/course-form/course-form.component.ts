@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CoursesService } from '../services/courses.service';
@@ -16,17 +16,20 @@ import { AppMaterialModule } from './../../shared/app-material/app-material.modu
 export class CourseFormComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
 
-  form: FormGroup;
+  form = this.formBuilder.group({
+    name: [''],
+    category: ['']
+  });;
 
-  constructor(private formBuilder: FormBuilder, private service: CoursesService, private location: Location) {
-    this.form = this.formBuilder.group({
-      name: [null],
-      category: [null]
-    });
+  constructor(
+    private formBuilder: NonNullableFormBuilder,
+    private service: CoursesService,
+    private location: Location,
+    private snackBar: MatSnackBar) {
+
   }
 
   ngOnInit(): void {
-
   }
 
   onSubmit() {
